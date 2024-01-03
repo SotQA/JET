@@ -69,7 +69,6 @@ public class ElNinoPageNew {
 
     public void fillPhoneNumberField(int phoneNumber) {
         phoneNumberField.sendKeys(Integer.toString(phoneNumber));
-        System.out.println(phoneNumber);
     }
 
     public void chooseCity() {

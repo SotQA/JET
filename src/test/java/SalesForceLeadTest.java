@@ -12,7 +12,7 @@ public class SalesForceLeadTest {
     public void setUp(){
         Configuration.headless = false;
         Configuration.browserSize = "2560x1440";
-        open(Config.SALESFORCE_LOGIN_PAGE);
+        open(BasePage.SALESFORCE_LOGIN_PAGE);
     }
 
     @org.junit.jupiter.api.Test

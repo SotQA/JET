@@ -1,13 +1,4 @@
-import com.codeborne.selenide.*;
-import org.bouncycastle.asn1.cmp.Challenge;
-
-import java.util.List;
-import java.util.Random;
-
-import static com.codeborne.selenide.Selenide.$$x;
-import static com.codeborne.selenide.Selenide.$x;
-
-public class Config {
+public class BasePage {
 
     protected static final String TEST_USER = "test.automation@justeattakeaway.com.sco.par";
     protected static final String TEST_PASSWORD = "Auto4sforce2";

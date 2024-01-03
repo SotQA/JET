@@ -1,13 +1,13 @@
 import com.codeborne.selenide.*;
-import com.codeborne.selenide.impl.WebDriverContainer;
-import org.bouncycastle.oer.its.etsi102941.Url;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.currentFrameUrl;
 import static com.codeborne.selenide.WebDriverRunner.url;
 
 public class SfFirstPage {
@@ -30,15 +30,21 @@ public class SfFirstPage {
     private final static String AUSTRIAN_LEADS_URL = "https://scoober--par.sandbox.lightning.force.com/lightning/o/Lead/list?filterName=00B1x000009IULAEA4";
     private final ElementsCollection sortingButtons = $$x("//a[@class='toggle slds-th__action slds-text-link--reset ']");
     private final ElementsCollection listOfLeads = $$x("//tr");
+    private final ElementsCollection listOfLeadsNames = $$x("//a[@data-refid='recordId']");
+    private final SelenideElement descendingDateSorting = $x("//th[@class='initialSortDesc sortable descending slds-is-sortable  slds-is-resizable slds-has-focus']");
+    private final SelenideElement ascendingDateSorting = $x("//th[@class='initialSortDesc sortable ascending slds-is-sortable  slds-is-resizable slds-has-focus']");
+    private final ElementsCollection leadCreationDate = $$x("//span[@class='slds-truncate uiOutputDateTime']");
+    private final SelenideElement loadingIndicator = $x("//div[@class='slds-spinner_container slds-grid']");
+
 
 
     //SF login methods
     public void fillTheLoginField() {
-        loginFieldSf.shouldBe(visible).sendKeys(Config.TEST_USER);
+        loginFieldSf.shouldBe(visible).sendKeys(BasePage.TEST_USER);
     }
 
     public void fillThePasswordField() {
-        passwordFieldSf.shouldBe(visible).sendKeys(Config.TEST_PASSWORD);
+        passwordFieldSf.shouldBe(visible).sendKeys(BasePage.TEST_PASSWORD);
     }
 
     public void clickSubmitButton() {
@@ -94,6 +100,17 @@ public class SfFirstPage {
     }
 
     public void createdLeadIsShown(String leadName){
-        listOfLeads.shouldBe(CollectionCondition.itemWithText(leadName));
+        loadingIndicator.shouldBe(Condition.disappear);
+        if(!listOfLeadsNames.get(0).getText().equals(leadName)){
+            sortingButtons.get(7).click();
+        }
+        listOfLeadsNames.shouldBe(CollectionCondition.itemWithText(leadName));
+    }
+
+    public void checkLeadCreationDate(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String dateWithoutSeconds =  dtf.toString().substring(0,dtf.toString().length()-3);
+        leadCreationDate.get(0).shouldBe(Condition.text(dateWithoutSeconds));
     }
 }
