@@ -1,22 +1,16 @@
 package elNino;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 
 import java.util.List;
 import java.util.Random;
 
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 
-public class ElNinoPage {
-    Random random = new Random();
-    public static final String ELNINIO_URL = "https://takeaway-recruitment-api.k.elnino-staging.com/it-en/courier";
-
-    //Web elements on ElNino page
-    private final SelenideElement selectCountryButton = $x("//div[@id='country_button']");
-    private final ElementsCollection countriesList = $$x("//li[@class='country_list_item']");
-    private final SelenideElement applyNowButton = $x("//a[@id='signup_form_button']");
-
+public class ElNinoPageOld {
     //ElNino page elements for registration
     private final SelenideElement firstNameField = $x("//input[@id='first_name2']");
     private final SelenideElement lastNameField = $x("//input[@id='last_name3']");
@@ -54,36 +48,6 @@ public class ElNinoPage {
 
 
     //Methods for ElNino page
-    public void clickChooseCountryButton() {
-        selectCountryButton.shouldBe(Condition.visible);
-        selectCountryButton.click();
-    }
-
-    public void countriesListIsShown() {
-        countriesList.should(CollectionCondition.size(13));
-    }
-
-    public void clickApplyNowButton() {
-        applyNowButton.shouldBe(Condition.visible);
-        applyNowButton.click();
-    }
-
-    public void chooseCountry(String country) {
-        for (int i = 0; i < countriesList.size(); i++) {
-            SelenideElement countryFromList = countriesList.get(i);
-            if (countryFromList.shouldBe(Condition.visible).text().equalsIgnoreCase(country))
-                countryFromList.click();
-            break;
-        }
-    }
-
-    public List<String> namesOfTheCities() {
-        return listOfCitiesToWork.texts();
-    }
-
-    public List<String> listOfHoursOfWork() {
-        return listOfHoursOfWork.texts();
-    }
 
     public List<String> listOfVehicles() {
         return typesOfVehicles.texts();
@@ -105,45 +69,29 @@ public class ElNinoPage {
     }
 
     public void fillPhoneNumberField(int phoneNumber) {
-        phoneNumberField.shouldBe(Condition.visible).click();
         phoneNumberField.sendKeys(Integer.toString(phoneNumber));
+        System.out.println(phoneNumber);
     }
 
     public void chooseCity() {
         cityToWorkField.shouldBe(Condition.visible).selectOption(2);
-
-//        listOfCitiesToWork.shouldBe(CollectionCondition.texts(namesOfTheCities()));
-//        listOfCitiesToWork.get(4).click();
-        Selenide.sleep(500);
     }
 
     public void chooseAge() {
         ageField.shouldBe(Condition.interactable).selectOption(1);
-//        selectAge.get(1).click();
-        Selenide.sleep(500);
     }
 
     public void chooseHoursOfWork() {
-        int UPPERBOUND_HOURS_LIST = 5;
         amountOfHoursOfWorkField.shouldBe(Condition.visible).selectOption(2);
-//        amountOfHoursOfWorkField.selectOption(random.nextInt(random.nextInt(listOfHoursOfWork.size())));
-//        listOfHoursOfWork.shouldBe(CollectionCondition.texts(listOfHoursOfWork()));
-//        listOfHoursOfWork.get(random.nextInt(UPPERBOUND_HOURS_LIST)).click();
     }
 
     public void chooseTypeOFShift() {
         typeOfShiftField.shouldBe(Condition.visible).selectOption(2);
-//        typeOfShiftList.should(CollectionCondition.size(5));
-//        int UPPERBOUND_SHIFTS = 5;
-//        typeOfShiftList.get(2).click();
     }
 
     public void chooseTypeOfVehicle() {
         typesOfVehicles.get(1).scrollIntoView(true);
         typesOfVehicles.get(1).click();
-        Selenide.sleep(500);
-//        typesOfVehicles.shouldBe(CollectionCondition.texts(listOfVehicles()));
-//        typesOfVehicles.get(1).click();
     }
 
     public void checkTheBox() {
@@ -160,13 +108,17 @@ public class ElNinoPage {
         registerButton.shouldBe(Condition.interactable).click();
     }
 
-    public void chooseTheCountry(String countryName) {
-        SelenideElement country;
-        for (int i = 0; i < countriesList.size(); i++) {
-            country = countriesList.get(i);
-            switch (country.getText()) {
-
-            }
-        }
+    //    public void chooseTheCountry(String countryName) {
+//        SelenideElement country;
+//        for (int i = 0; i < countriesList.size(); i++) {
+//            country = countriesList.get(i);
+//            switch (country.getText()) {
+//            }
+//        }
+//    }
+    public static int generatePhoneNumber(int maxLength) {
+        Random random = new Random();
+        int maxLimit = (int) Math.pow(10, maxLength) - 1;
+        return random.nextInt(maxLimit + 1);
     }
 }
