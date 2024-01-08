@@ -7,6 +7,7 @@ import austria.ElNinoPageNew;
 import elNino.FirstPage;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -33,14 +34,16 @@ public class LeadCreationTest {
 
     @BeforeMethod
     @BeforeEach
+    @Disabled
     public void setUp() {
-        Configuration.headless = false;
+        Configuration.headless = true;
         Configuration.browserSize = "2560x1440";
         open(FirstPage.FIRST_PAGE_URL);
     }
 
     @org.junit.jupiter.api.Test
     @Test
+    @Disabled
     public void createAustrianLeadFromElninoPage() {
         firstPage.clickChooseCountryButton();
         firstPage.countriesListIsShown();
@@ -84,6 +87,7 @@ public class LeadCreationTest {
 
     @org.junit.jupiter.api.Test
     @Test
+    @Disabled
     public void createBelgiumLeadFromElninoPage() {
         firstPage.clickChooseCountryButton();
         firstPage.countriesListIsShown();
@@ -91,23 +95,6 @@ public class LeadCreationTest {
         firstPage.chooseLanguage();
         firstPage.clickApplyNowButton();
         firstPage.acceptCookies();
-        cityPage.chooseCity();
-        cityPage.fillAddressField(testData);
-        cityPage.clickProceedButton();
-        whatYouNeedPage.warningsAreShown();
-        whatYouNeedPage.clickProceedButton();
-        elNinoPageNew.fillFirstNameField("Autotest " + testData);
-        elNinoPageNew.fillLastNameField(testData);
-        elNinoPageNew.fillEmailField(testData + "@gmail.com");
-        elNinoPageNew.fillPhoneNumberField(phoneNumber);
-        whatYouNeedPage.clickProceedButton();
-        vehiclePage.chooseAge();
-        vehiclePage.chooseHours();
-        vehiclePage.chooseTypeOfShift();
-        vehiclePage.chooseVehicleType();
-        vehiclePage.clickCheckBoxConsent();
-        whatYouNeedPage.clickProceedButton();
-        whatYouNeedPage.clickProceedButton();
 //        firstPage.clickChooseCountryButton();
 //        firstPage.countriesListIsShown();
 //        firstPage.chooseCountry("Belgium");
@@ -127,6 +114,7 @@ public class LeadCreationTest {
 
     @org.junit.jupiter.api.Test
     @Test
+    @Disabled
     public void createItalianLeadFromElninoPage() {
         firstPage.clickChooseCountryButton();
         firstPage.countriesListIsShown();

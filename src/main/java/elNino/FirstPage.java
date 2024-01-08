@@ -12,6 +12,7 @@ public class FirstPage {
     public static final String FIRST_PAGE_URL = "https://takeaway-recruitment-api.k.elnino-staging.com/it-en/courier";
     private final SelenideElement selectCountryButton = $x("//div[@id='country_button']");
     private final ElementsCollection countriesList = $$x("//li[@class='country_list_item']");
+    private final ElementsCollection countriesName = $$x("//li[@class='country_list_item']/a/span");
     private final SelenideElement applyNowButton = $x("//a[@id='signup_form_button']");
     private final ElementsCollection languages = $$x("//li[@class='language_list_item']");
     private final SelenideElement cookieButton = $x("//button[@id='cookie_consent_button']");
@@ -31,9 +32,9 @@ public class FirstPage {
     }
 
     public void chooseCountry(String country) {
-        for (int i = 0; i < countriesList.size(); i++) {
-            SelenideElement countryFromList = countriesList.get(i);
-            if (countryFromList.shouldBe(Condition.visible).text().equalsIgnoreCase(country))
+        for (int i = 0; i < countriesName.size(); i++) {
+            SelenideElement countryFromList = countriesName.get(i);
+            if (countryFromList.shouldBe(Condition.visible).getText().equalsIgnoreCase(country))
                 countryFromList.click();
             break;
         }
@@ -49,6 +50,8 @@ public class FirstPage {
     }
 
     public void acceptCookies() {
-            cookieButton.shouldBe(Condition.visible).click();
+        if (cookieButton.shouldBe(Condition.visible).isDisplayed()) {
+            cookieButton.click();
+        }
     }
 }

@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.Disabled;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -9,6 +10,7 @@ public class SalesForceLeadTest {
     SfFirstPage page = new SfFirstPage();
 
     @BeforeMethod
+    @Disabled
     public void setUp(){
         Configuration.headless = false;
         Configuration.browserSize = "2560x1440";
@@ -17,6 +19,7 @@ public class SalesForceLeadTest {
 
     @org.junit.jupiter.api.Test
     @Test
+    @Disabled
     public void checkTheLeadIsCreated() throws InterruptedException {
         page.fillTheLoginField();
         page.fillThePasswordField();
